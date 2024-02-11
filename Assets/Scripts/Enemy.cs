@@ -25,9 +25,11 @@ public class Enemy : MonoBehaviour
         {
             heldSpear.SetActive(false);
 
+            yield return new WaitForSeconds(.5f);
+            heldSpear.SetActive(true);
+
             yield return new WaitForSeconds(waitTime);
             
-            heldSpear.SetActive(true);
             FireProjectile();
         }
     }

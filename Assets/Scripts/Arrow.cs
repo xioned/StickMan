@@ -27,7 +27,6 @@ public class Arrow : MonoBehaviour
         collision.transform.TryGetComponent(out BodyPart bp);
         if (bp == null) { return; }
 
-        Destroy(rb);
         
         GameObject particle = Instantiate(bloodparticle, transform.position, Quaternion.identity);
         particle.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -52,6 +51,7 @@ public class Arrow : MonoBehaviour
             collision.GetComponent<Rigidbody2D>().velocity = Vector2.left * force;
             
         }
+        Destroy(rb);
         isAttached = true;
         this.enabled = false;
     }
