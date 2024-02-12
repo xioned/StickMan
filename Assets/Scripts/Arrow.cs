@@ -35,10 +35,19 @@ public class Arrow : MonoBehaviour
         if (bp.isHead)
         {
             bp.health.DecreaseHealth(2);
+            if (!isEnemyArrow) 
+            {
+                GameEvents.CallEnemyDamageUiEvent(2,transform.position);
+            }
+
         }
         else
         {
             bp.health.DecreaseHealth(1);
+            if (!isEnemyArrow)
+            {
+                GameEvents.CallEnemyDamageUiEvent(1, transform.position);
+            }
         }
 
         if (bp.health.health <= 0)

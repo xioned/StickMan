@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Linq.Expressions;
+using DG.Tweening;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,17 +10,18 @@ public class Player : MonoBehaviour
 
     [SerializeField] float launchForce = 15f;
     public GameObject heldSpear;
-    public Transform spinArm;
+    public Animator animator;
     bool isDead =false;
     Vector2 velocity, startMousePos, currentMousePos;
 
     [SerializeField] float shootDelay;
+    [SerializeField] float rotateSpeed;
     [SerializeField] float timer;
     [SerializeField] bool canShoot = true;
-    
 
     private void Update()
     {
+        if(isDead) return;
         if (!canShoot)
         {
             if(timer >= 0) timer -= Time.deltaTime;
@@ -34,7 +33,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(isDead) return;
 
         if (canShoot)
         {
@@ -46,7 +44,6 @@ public class Player : MonoBehaviour
             }
             if (Input.GetMouseButton(0))
             {
-                //if(!heldSpear.activeSelf) { heldSpear.SetActive(true); }
                 currentMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 velocity = (startMousePos - currentMousePos) * launchForce;
                 RotateBody();
@@ -60,14 +57,13 @@ public class Player : MonoBehaviour
                 FireProjectile();
             }
         }
-        
     }
 
     private void FireProjectile()
     {
         Debug.Log("Shooting");
-
         heldSpear.SetActive(false);
+        animator.SetTrigger("Rotate");
         Transform projectile = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
         projectile.GetComponentInChildren<Rigidbody2D>().velocity = spawnPoint.right * launchForce;
         canShoot = false;
@@ -84,6 +80,7 @@ public class Player : MonoBehaviour
 
     public void PlayerDied()
     {
+        GameEvents.CallPlayerIsDeadEvent();
         lineRenderer.enabled = false;
 
         isDead = true;
