@@ -1,0 +1,9 @@
+diff a/Assets/Prefabs/BloodPartilce.prefab b/Assets/Prefabs/BloodPartilce.prefab	(rejected hunks)
+@@ -43,7 +43,6 @@
+   serializedVersion: 8
+   lengthInSec: 1
+   simulationSpeed: 1.5
+-  stopAction: 2
+   stopAction: 0
+   cullingMode: 0
+   ringBufferMode: 0
