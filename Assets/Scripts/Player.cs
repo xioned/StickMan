@@ -16,45 +16,65 @@ public class Player : MonoBehaviour
     bool isDead =false;
     Vector2 velocity, startMousePos, currentMousePos;
 
+    [SerializeField] float shootDelay;
+    [SerializeField] float timer;
+    [SerializeField] bool canShoot = true;
+    
+
     private void Update()
     {
-        if(isDead) return;
-        if (Input.GetMouseButtonDown(0))
+        if (!canShoot)
         {
-            lineRenderer.enabled = true;
-            startMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            lineRenderer.SetPosition(0, startMousePos);
+            if(timer >= 0) timer -= Time.deltaTime;
+            else
+            {
+                canShoot = true;
+                timer = shootDelay;
+                heldSpear.SetActive(true);
+            }
         }
-        if (Input.GetMouseButton(0))
-        {
-            //if(!heldSpear.activeSelf) { heldSpear.SetActive(true); }
-            currentMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            velocity = (startMousePos - currentMousePos) * launchForce;
-            RotateBody();
-            lineRenderer.SetPosition(1, currentMousePos);
 
-        }
-        if (Input.GetMouseButtonUp(0))
+        if(isDead) return;
+
+        if (canShoot)
         {
-            lineRenderer.enabled = false;
-            FireProjectile();
+            if (Input.GetMouseButtonDown(0))
+            {
+                lineRenderer.enabled = true;
+                startMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                lineRenderer.SetPosition(0, startMousePos);
+            }
+            if (Input.GetMouseButton(0))
+            {
+                //if(!heldSpear.activeSelf) { heldSpear.SetActive(true); }
+                currentMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                velocity = (startMousePos - currentMousePos) * launchForce;
+                RotateBody();
+                lineRenderer.SetPosition(1, currentMousePos);
+
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+
+                lineRenderer.enabled = false;
+                FireProjectile();
+            }
         }
+        
     }
 
     private void FireProjectile()
     {
-        StartCoroutine(FireProjectileRoutine());
-    }
+        Debug.Log("Shooting");
 
-    private IEnumerator FireProjectileRoutine()
-    {
         heldSpear.SetActive(false);
         Transform projectile = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
         projectile.GetComponentInChildren<Rigidbody2D>().velocity = spawnPoint.right * launchForce;
-        yield return new WaitForSeconds(.5f);
-        heldSpear.SetActive(true);
-        yield return new WaitForSeconds(2);
+        canShoot = false;
+        timer = shootDelay;
     }
+
+
 
     void RotateBody()
     {
