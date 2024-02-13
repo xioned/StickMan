@@ -8,9 +8,13 @@ public class UiManager : MonoBehaviour
     public Camera cam;
     public float uiMoveUpValue;
     public Canvas parent;
+
+    public GameObject levelCleared;
+    public TextMeshProUGUI savedPointText;
+    public TextMeshProUGUI pointsText;
+    public TextMeshProUGUI totalPoint;
+
     public TextMeshProUGUI scoreTextGame;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI bestScoreText;
     private void Start()
     {
         cam = Camera.main;
@@ -24,11 +28,18 @@ public class UiManager : MonoBehaviour
         GameEvents.EnemyDamageUiEvent -= DamageUipop;
     }
 
+    public void ShowLevelCOmplete()
+    {
+        savedPointText.text = "Inventory Points: " + GameManager.Instance.score.ToString("00");
+        pointsText.text = "Points Earned: " + GameManager.Instance.savedScore.ToString("00");
+        totalPoint.text = "Total Points: " + GameManager.Instance.savedScore + GameManager.Instance.savedScore.ToString("00");
+
+        levelCleared.SetActive(true);
+    }
+
     public void UpdateScoreUi(int score,int bestScore)
     {
         scoreTextGame.text = score.ToString();
-        scoreText.text = "Score: "+score.ToString();
-        bestScoreText.text = "Best Score: "+bestScore.ToString();
     }
     private void DamageUipop(int amount, Vector3 pos)
     {
