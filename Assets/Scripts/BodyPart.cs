@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class BodyPart : MonoBehaviour
 {
-    public bool isHead = false;
+    public int damageAmount = 1;
     public Health health;
 }

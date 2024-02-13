@@ -32,33 +32,16 @@ public class Arrow : MonoBehaviour
         particle.transform.rotation = Quaternion.Euler(0, 90, 0);
         transform.parent = collision.transform;
 
-        if (bp.isHead)
+        bp.health.DecreaseHealth(bp.damageAmount);
+        if (!isEnemyArrow)
         {
-            bp.health.DecreaseHealth(2);
-            if (!isEnemyArrow) 
-            {
-                GameEvents.CallEnemyDamageUiEvent(2,transform.position);
-            }
-
+            GameEvents.CallEnemyDamageUiEvent(bp.damageAmount, transform.position);
         }
-        else
-        {
-            bp.health.DecreaseHealth(1);
-            if (!isEnemyArrow)
-            {
-                GameEvents.CallEnemyDamageUiEvent(1, transform.position);
-            }
-        }
-
+        
         if (bp.health.health <= 0)
         {
-            int force = 20;
-            if (!isEnemyArrow)
-            {
-                force = -20;
-            }
+            int force = !isEnemyArrow ? -20 : 20;
             collision.GetComponent<Rigidbody2D>().velocity = Vector2.left * force;
-            
         }
         Destroy(rb);
         isAttached = true;
