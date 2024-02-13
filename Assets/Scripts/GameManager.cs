@@ -86,8 +86,8 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < enemySpawnAmount; i++)
         {
             int randPos = UnityEngine.Random.Range(0, emptySpawnSlot.Count);
-            emptySpawnSlot.RemoveAt(randPos);
             Instantiate(enemyPrefab, enemySpawnPosition[randPos].position, Quaternion.identity);
+            emptySpawnSlot.RemoveAt(randPos);
         }
     }
     
