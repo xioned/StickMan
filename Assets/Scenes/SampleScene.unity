@@ -5329,14 +5329,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 8338339597981668357, guid: 880509b9d0bbef04fa8230a0700d0416, type: 3}
-      propertyPath: damageAmount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9219049556573206384, guid: 880509b9d0bbef04fa8230a0700d0416, type: 3}
-      propertyPath: damageAmount
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
