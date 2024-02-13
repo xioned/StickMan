@@ -10,11 +10,14 @@ public class UiManager : MonoBehaviour
     public Canvas parent;
 
     public GameObject levelCleared;
+    public GameObject powerupPanel;
     public TextMeshProUGUI savedPointText;
     public TextMeshProUGUI pointsText;
     public TextMeshProUGUI totalPoint;
 
     public TextMeshProUGUI scoreTextGame;
+    public TextMeshProUGUI abilityText;
+
     private void Start()
     {
         cam = Camera.main;
@@ -30,11 +33,17 @@ public class UiManager : MonoBehaviour
 
     public void ShowLevelCOmplete()
     {
-        savedPointText.text = "Inventory Points: " + GameManager.Instance.score.ToString("00");
-        pointsText.text = "Points Earned: " + GameManager.Instance.savedScore.ToString("00");
-        totalPoint.text = "Total Points: " + GameManager.Instance.savedScore + GameManager.Instance.savedScore.ToString("00");
-
         levelCleared.SetActive(true);
+        powerupPanel.SetActive(false);
+        UpdatePoints();
+    }
+
+    public void UpdatePoints()
+    {
+        savedPointText.text = "Inventory Points: " + GameManager.Instance.tmpPoint.ToString("00");
+        pointsText.text = "Points Earned: " + GameManager.Instance.score.ToString("00");
+        totalPoint.text = "Total Points: " +  GameManager.Instance.savedScore.ToString("00");
+        abilityText.text = "Buy Abilities - " +  GameManager.Instance.savedScore.ToString("00");
     }
 
     public void UpdateScoreUi(int score,int bestScore)

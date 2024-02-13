@@ -30,7 +30,6 @@ public class Player : MonoBehaviour
             else
             {
                 canShoot = true;
-                timer = shootDelay;
                 heldSpear.SetActive(true);
             }
         }
@@ -69,7 +68,7 @@ public class Player : MonoBehaviour
         Transform projectile = Instantiate(projectilePrefab, spawnPoint.position, Quaternion.identity);
         projectile.GetComponentInChildren<Rigidbody2D>().velocity = spawnPoint.right * launchForce;
         canShoot = false;
-        timer = shootDelay;
+        timer = Global.isSpeedActive ? .2f : shootDelay;
         source.PlayOneShot(clips[Random.Range(0, clips.Length)]);
         //CameraShake.Shake(0.1f,0.1f);
     }

@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,11 +42,54 @@ public class Arrow : MonoBehaviour
             source.PlayOneShot(hit[0]);
         }
 
+        if (isEnemyArrow)
+        {
+
+            Debug.Log(bp.gameObject.layer);
+
+            if(bp.gameObject.layer == 6)
+            {
+                if (Global.isHitActive)
+                {
+                    Global.isHitActive = false;
+                    Destroy(gameObject);
+                    for (int j = 0; j < GameManager.Instance.powerupViews[0].powerUpPrefab.Length; j++)
+                    {
+                        GameManager.Instance.powerupViews[0].powerUpPrefab[j].SetActive(false);
+                    }
+                    Debug.Log("Got free headshot");
+                    return;
+                }
+
+            }
+            else if(bp.gameObject.layer == 7)
+            {
+                if(Global.isBodyActive)
+                {
+                    Global.totalBodyCount++;
+
+                    if(Global.totalBodyCount >= 3)
+                    {
+                        Global.isBodyActive = false;
+                        Global.totalBodyCount = 0;
+                    }
+                    Destroy(gameObject);
+                    for (int j = 0; j < GameManager.Instance.powerupViews[1].powerUpPrefab.Length; j++)
+                    {
+                        GameManager.Instance.powerupViews[1].powerUpPrefab[j].SetActive(false);
+                    }
+                    Debug.Log("Got free bodyshot");
+                    return;
+                }
+            }
+        }
+
         GameObject particle = Instantiate(bloodparticle, transform.position, Quaternion.identity);
         particle.transform.rotation = Quaternion.Euler(0, 90, 0);
         transform.parent = collision.transform;
 
         bp.health.DecreaseHealth(bp.damageAmount);
+
         if (!isEnemyArrow)
         {
             GameEvents.CallEnemyDamageUiEvent(bp.damageAmount, transform.position);

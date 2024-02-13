@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour
     public GameObject enemyPrefab;
     public int score;
     public int savedScore;
+    public int tmpPoint;
     public Transform[] enemySpawnPosition;
     public int enemyKilledCount;
     public int difficultyLevel = 1;
     public bool gameOver;
     public bool levelCelared;
+    public PowerupView[] powerupViews;
 
     Transform[] emptySpawnSlot;
     private void OnEnable()
@@ -48,19 +50,31 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         uiManager.levelCleared.SetActive(false);
+        uiManager.powerupPanel.SetActive(true);
         levelCelared = false;
         SpawnNewEnemy();
         enemyKilledCount = 0;
+        score = 0;
+        Global.isSpeedActive = false;
+        tmpPoint = savedScore;
+        uiManager.UpdateScoreUi(score, savedScore);
+        for (int i = 0; i < powerupViews.Length; i++)
+        {
+            powerupViews[i].ShowHide();
+
+            for (int j = 0; j < powerupViews[i].powerUpPrefab.Length; j++)
+            {
+                powerupViews[i].powerUpPrefab[j].SetActive(false);
+            }
+        }
     }
 
     private void AddScore(int arg1, Vector3 vector)
     {
         score += arg1;
-        savedScore += score;
+        savedScore += arg1;
         PlayerPrefs.SetInt("savedScore", savedScore);
         uiManager.UpdateScoreUi(score, savedScore);
-
-        Debug.Log("SCORING!");
     }
 
     public void ScoreUpdate()
@@ -70,6 +84,7 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("savedScore", 0);
         }
         savedScore = PlayerPrefs.GetInt("savedScore");
+        tmpPoint = savedScore;
     }
 
     

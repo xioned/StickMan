@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 79f1fdc0c5dfe6443be7834a30a63acd
+guid: 6c7dcc891a3d706469099668dc5b26d4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 579565389468337597
-    second: Laser Nipples_0
+      213: -1091259100988818475
+    second: NFT SPEAR_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Laser Nipples_0
+      name: NFT SPEAR_0
       rect:
         serializedVersion: 2
-        x: 431
-        y: 281
-        width: 649
-        height: 238
+        x: 780
+        y: 299
+        width: 484
+        height: 1484
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: db50f5ba6a70b0800800000000000000
-      internalID: 579565389468337597
+      spriteID: 5db36af11a11bd0f0800000000000000
+      internalID: -1091259100988818475
       vertices: []
       indices: 
       edges: []
@@ -133,7 +133,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Laser Nipples_0: 579565389468337597
+      NFT SPEAR_0: -1091259100988818475
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
