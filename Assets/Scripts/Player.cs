@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField] float rotateSpeed;
     [SerializeField] float timer;
     [SerializeField] bool canShoot = true;
+    [SerializeField] AudioSource source;
+    [SerializeField] AudioClip[] clips;
 
     private void Update()
     {
@@ -34,7 +36,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if (canShoot)
+        if (canShoot && !GameManager.Instance.levelCelared)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -68,6 +70,8 @@ public class Player : MonoBehaviour
         projectile.GetComponentInChildren<Rigidbody2D>().velocity = spawnPoint.right * launchForce;
         canShoot = false;
         timer = shootDelay;
+        source.PlayOneShot(clips[Random.Range(0, clips.Length)]);
+        //CameraShake.Shake(0.1f,0.1f);
     }
 
 
@@ -75,14 +79,14 @@ public class Player : MonoBehaviour
     void RotateBody()
     {
         float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-        bodyRotate.rotation = Quaternion.AngleAxis(Mathf.Clamp(angle, -40, 40), Vector3.forward);
+        bodyRotate.rotation = Quaternion.AngleAxis(Mathf.Clamp(angle, -45, 45), Vector3.forward);
     }
 
     public void PlayerDied()
     {
         GameEvents.CallPlayerIsDeadEvent();
         lineRenderer.enabled = false;
-
+        GameManager.Instance.gameOver = true;
         isDead = true;
     }
 }

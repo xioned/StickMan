@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public Transform spinArm;
     public bool isDead = false;
     public Animator animator;
+
     private void OnEnable()
     {
         GameEvents.OnPlayerIsDeadEvent += PlayerDied;
@@ -30,9 +31,10 @@ public class Enemy : MonoBehaviour
         StartCoroutine(FireProjectileRoutine());
     }
 
+
     private IEnumerator FireProjectileRoutine()
     {
-        while (!isDead)
+        while (!isDead && !GameManager.Instance.gameOver)
         {
             heldSpear.SetActive(false);
 
@@ -52,7 +54,8 @@ public class Enemy : MonoBehaviour
 
     IEnumerator DeadRoutine()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2f);
+        GameManager.Instance.IncreaseKillCount();
         GameManager.Instance.SpawnNewEnemy();
         Destroy(this.gameObject);
     }

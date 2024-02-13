@@ -8,10 +8,12 @@ public class GameManager : MonoBehaviour
     public UiManager uiManager;
     public GameObject enemyPrefab;
     public int score;
-    public int bestScore;
+    public int savedScore;
     public Transform[] enemySpawnPosition;
-    int enemyKilledCount;
-    int difficultyLevel = 1;
+    public int enemyKilledCount;
+    public int difficultyLevel = 1;
+    public bool gameOver;
+    public bool levelCelared;
 
     Transform[] emptySpawnSlot;
     private void OnEnable()
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void Start()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -35,70 +37,67 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+    private void Start()
+    {
         ScoreUpdate();
+
+    }
+
+    public void NextLevel()
+    {
+        uiManager.levelCleared.SetActive(false);
+        levelCelared = false;
+        SpawnNewEnemy();
+        enemyKilledCount = 0;
     }
 
     private void AddScore(int arg1, Vector3 vector)
     {
         score += arg1;
-        if(score > bestScore)
-        {
-            bestScore = score;
-            PlayerPrefs.SetInt("BestScore", score);
-        }
-        uiManager.UpdateScoreUi(score, bestScore);
+        savedScore += score;
+        PlayerPrefs.SetInt("savedScore", savedScore);
+        uiManager.UpdateScoreUi(score, savedScore);
+
+        Debug.Log("SCORING!");
     }
 
     public void ScoreUpdate()
     {
-        if (!PlayerPrefs.HasKey("BestScore"))
+        if (!PlayerPrefs.HasKey("savedScore"))
         {
-            PlayerPrefs.SetInt("BestScore", 0);
+            PlayerPrefs.SetInt("savedScore", 0);
         }
-        bestScore = PlayerPrefs.GetInt("BestScore");
+        savedScore = PlayerPrefs.GetInt("savedScore");
     }
 
     
+    public void IncreaseKillCount()
+    {
+        enemyKilledCount++;
+        if (enemyKilledCount >= 3 * difficultyLevel)
+        {
+            uiManager.ShowLevelCOmplete(); 
+            levelCelared = true;
+            difficultyLevel = 2;
+        }
+    }
+
 
     public void SpawnNewEnemy()
     {
-        if(GameObject.FindObjectOfType<Player>() == null) { return; }
-        if (enemyKilledCount > 5)
-        {
-            difficultyLevel = 2;
+        if(gameOver || levelCelared) 
+        { 
+            return; 
         }
-
+    
         int randPos = UnityEngine.Random.Range(0, enemySpawnPosition.Length);
         Instantiate(enemyPrefab, enemySpawnPosition[randPos].position,Quaternion.identity);
-    }
-    void LevelDifficulty()
-    {
-        switch(enemyKilledCount)
-        {
-            case 5:
-                difficultyLevel++; break;
-            case 10:
-                difficultyLevel++; break;
-            case 15:
-                difficultyLevel++; break;
-            case 20:
-                difficultyLevel++; break;
-            case 25:
-                difficultyLevel++; break;
-            case 30:
-                difficultyLevel++; break;
-            case 35:
-                difficultyLevel++; break;
-            case 40:
-                difficultyLevel++; break;
-            case 45:
-                difficultyLevel++; break;
-            case 50:
-                difficultyLevel++; break;
-                default: break;
 
-        }
+        Debug.Log("Spwaning new enemy");
     }
+   
     public void ExitGame() => Application.Quit();
     public void NewGame() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 

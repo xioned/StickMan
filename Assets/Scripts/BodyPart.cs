@@ -6,4 +6,6 @@ public class BodyPart : MonoBehaviour
 {
     public int damageAmount = 1;
     public Health health;
+
+ 
 }
