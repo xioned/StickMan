@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,10 +12,10 @@ public class GameManager : MonoBehaviour
     public int score;
     public int bestScore;
     public Transform[] enemySpawnPosition;
-    int enemyKilledCount;
-    int difficultyLevel = 1;
 
-    Transform[] emptySpawnSlot;
+    int level =1;
+    int enemyLeftCount=1;
+    List<Transform> emptySpawnSlot;
     private void OnEnable()
     {
         GameEvents.EnemyDamageUiEvent += AddScore;
@@ -63,42 +65,32 @@ public class GameManager : MonoBehaviour
     public void SpawnNewEnemy()
     {
         if(GameObject.FindObjectOfType<Player>() == null) { return; }
-        if (enemyKilledCount > 5)
+        enemyLeftCount--;
+        if(enemyLeftCount > 0) { return; }
+        level++;
+
+        
+        int enemySpawnAmount = 1;
+        if(level >3)
         {
-            difficultyLevel = 2;
+            enemySpawnAmount = 2;
+        }
+        if(level > 8)
+        {
+            enemySpawnAmount = 3;
         }
 
-        int randPos = UnityEngine.Random.Range(0, enemySpawnPosition.Length);
-        Instantiate(enemyPrefab, enemySpawnPosition[randPos].position,Quaternion.identity);
-    }
-    void LevelDifficulty()
-    {
-        switch(enemyKilledCount)
-        {
-            case 5:
-                difficultyLevel++; break;
-            case 10:
-                difficultyLevel++; break;
-            case 15:
-                difficultyLevel++; break;
-            case 20:
-                difficultyLevel++; break;
-            case 25:
-                difficultyLevel++; break;
-            case 30:
-                difficultyLevel++; break;
-            case 35:
-                difficultyLevel++; break;
-            case 40:
-                difficultyLevel++; break;
-            case 45:
-                difficultyLevel++; break;
-            case 50:
-                difficultyLevel++; break;
-                default: break;
+        enemyLeftCount = enemySpawnAmount;
 
+        emptySpawnSlot = enemySpawnPosition.ToList<Transform>();
+        for (int i = 0; i < enemySpawnAmount; i++)
+        {
+            int randPos = UnityEngine.Random.Range(0, emptySpawnSlot.Count);
+            emptySpawnSlot.RemoveAt(randPos);
+            Instantiate(enemyPrefab, enemySpawnPosition[randPos].position, Quaternion.identity);
         }
     }
+    
     public void ExitGame() => Application.Quit();
     public void NewGame() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 

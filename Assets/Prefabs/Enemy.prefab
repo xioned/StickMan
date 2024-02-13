@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHead: 0
+  damageAmount: 1
   health: {fileID: 7716795254242273928}
 --- !u!50 &8831521471330137286
 Rigidbody2D:
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHead: 0
+  damageAmount: 1
   health: {fileID: 7716795254242273928}
 --- !u!50 &6138918667689192213
 Rigidbody2D:
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHead: 1
+  damageAmount: 4
   health: {fileID: 7716795254242273928}
 --- !u!58 &9101112223296353906
 CircleCollider2D:
@@ -852,7 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHead: 0
+  damageAmount: 1
   health: {fileID: 0}
 --- !u!50 &2554780801855623706
 Rigidbody2D:
@@ -1052,7 +1052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHead: 0
+  damageAmount: 1
   health: {fileID: 7716795254242273928}
 --- !u!50 &7272441871010042149
 Rigidbody2D:
@@ -1251,7 +1251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHead: 0
+  damageAmount: 1
   health: {fileID: 7716795254242273928}
 --- !u!50 &2799620810899308200
 Rigidbody2D:
@@ -2069,7 +2069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHead: 0
+  damageAmount: 1
   health: {fileID: 7716795254242273928}
 --- !u!50 &3667649153335412439
 Rigidbody2D:
@@ -2366,7 +2366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHead: 0
+  damageAmount: 2
   health: {fileID: 7716795254242273928}
 --- !u!60 &2324866996626966840
 PolygonCollider2D:
