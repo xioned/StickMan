@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ScoreUpdate();
-
+        SpawnNewEnemy();
     }
 
     public void NextLevel()
@@ -107,10 +107,10 @@ public class GameManager : MonoBehaviour
             return; 
         }
     
+        Debug.Log("Spwaning new enemy");
         int randPos = UnityEngine.Random.Range(0, enemySpawnPosition.Length);
         Instantiate(enemyPrefab, enemySpawnPosition[randPos].position,Quaternion.identity);
 
-        Debug.Log("Spwaning new enemy");
     }
    
     public void ExitGame() => Application.Quit();
