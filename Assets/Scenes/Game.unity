@@ -8485,7 +8485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiManager: {fileID: 302010358}
-  enemyPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 6183419644174719404, guid: bf4a066274d786643a451757d6730006, type: 3}
   score: 0
   savedScore: 0
   tmpPoint: 0

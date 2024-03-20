@@ -17,7 +17,6 @@ public class Health : MonoBehaviour
     {
         health-=amount;
         if(health > 0) { return; }
-        Debug.Log("XX");
         DoRagdoll();
         onHealthZero?.Invoke();
     }
