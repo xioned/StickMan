@@ -5,14 +5,9 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
+    public UnityEvent onHealthZero;
     public int health = 2;
     public Rigidbody2D[] bodypartRigidbody;
-    public UnityEvent onHealthZero;
-
-    private void Awake()
-    {
-        ResetRagdoll();
-    }
     public void DecreaseHealth(int amount)
     {
         health-=amount;
@@ -26,14 +21,6 @@ public class Health : MonoBehaviour
         for (int i = 0; i < bodypartRigidbody.Length; i++)
         {
             bodypartRigidbody[i].bodyType = RigidbodyType2D.Dynamic;
-        }
-    }
-
-    private void ResetRagdoll()
-    {
-        for (int i = 0; i < bodypartRigidbody.Length; i++)
-        {
-            bodypartRigidbody[i].bodyType = RigidbodyType2D.Static;
         }
     }
 }

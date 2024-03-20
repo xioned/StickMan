@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator FireProjectileRoutine()
     {
-        while (!isDead&& !GameManager.Instance.gameOver)
+        while (!isDead && !GameManager.Instance.gameOver)
         {
             heldSpear.SetActive(false);
 
