@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,16 +10,12 @@ public class GameManager : MonoBehaviour
     public UiManager uiManager;
     public GameObject enemyPrefab;
     public int score;
-    public int savedScore;
-    public int tmpPoint;
+    public int bestScore;
     public Transform[] enemySpawnPosition;
-    public int enemyKilledCount;
-    public int difficultyLevel = 1;
-    public bool gameOver;
-    public bool levelCelared;
-    public PowerupView[] powerupViews;
 
-    Transform[] emptySpawnSlot;
+    int level =1;
+    int enemyLeftCount=1;
+    List<Transform> emptySpawnSlot;
     private void OnEnable()
     {
         GameEvents.EnemyDamageUiEvent += AddScore;
@@ -29,7 +27,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void Awake()
+    private void Start()
     {
         if (Instance == null)
         {
@@ -39,80 +37,60 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
-    }
-
-    private void Start()
-    {
         ScoreUpdate();
-
-    }
-
-    public void NextLevel()
-    {
-        uiManager.levelCleared.SetActive(false);
-        uiManager.powerupPanel.SetActive(true);
-        levelCelared = false;
-        SpawnNewEnemy();
-        enemyKilledCount = 0;
-        score = 0;
-        Global.isSpeedActive = false;
-        tmpPoint = savedScore;
-        uiManager.UpdateScoreUi(score, savedScore);
-        for (int i = 0; i < powerupViews.Length; i++)
-        {
-            powerupViews[i].ShowHide();
-
-            for (int j = 0; j < powerupViews[i].powerUpPrefab.Length; j++)
-            {
-                powerupViews[i].powerUpPrefab[j].SetActive(false);
-            }
-        }
     }
 
     private void AddScore(int arg1, Vector3 vector)
     {
         score += arg1;
-        savedScore += arg1;
-        PlayerPrefs.SetInt("savedScore", savedScore);
-        uiManager.UpdateScoreUi(score, savedScore);
+        if(score > bestScore)
+        {
+            bestScore = score;
+            PlayerPrefs.SetInt("BestScore", score);
+        }
+        uiManager.UpdateScoreUi(score, bestScore);
     }
 
     public void ScoreUpdate()
     {
-        if (!PlayerPrefs.HasKey("savedScore"))
+        if (!PlayerPrefs.HasKey("BestScore"))
         {
-            PlayerPrefs.SetInt("savedScore", 0);
+            PlayerPrefs.SetInt("BestScore", 0);
         }
-        savedScore = PlayerPrefs.GetInt("savedScore");
-        tmpPoint = savedScore;
+        bestScore = PlayerPrefs.GetInt("BestScore");
     }
 
     
-    public void IncreaseKillCount()
-    {
-        enemyKilledCount++;
-        if (enemyKilledCount >= 3 * difficultyLevel)
-        {
-            uiManager.ShowLevelCOmplete(); 
-            levelCelared = true;
-            difficultyLevel = 2;
-        }
-    }
-
 
     public void SpawnNewEnemy()
     {
-        if(gameOver || levelCelared) 
-        { 
-            return; 
-        }
-    
-        int randPos = UnityEngine.Random.Range(0, enemySpawnPosition.Length);
-        Instantiate(enemyPrefab, enemySpawnPosition[randPos].position,Quaternion.identity);
+        if(GameObject.FindObjectOfType<Player>() == null) { return; }
+        enemyLeftCount--;
+        if(enemyLeftCount > 0) { return; }
+        level++;
 
-        Debug.Log("Spwaning new enemy");
+        
+        int enemySpawnAmount = 1;
+        if(level >3)
+        {
+            enemySpawnAmount = 2;
+        }
+        if(level > 8)
+        {
+            enemySpawnAmount = 3;
+        }
+
+        enemyLeftCount = enemySpawnAmount;
+
+        emptySpawnSlot = enemySpawnPosition.ToList<Transform>();
+        for (int i = 0; i < enemySpawnAmount; i++)
+        {
+            int randPos = UnityEngine.Random.Range(0, emptySpawnSlot.Count);
+            Instantiate(enemyPrefab, enemySpawnPosition[randPos].position, Quaternion.identity);
+            emptySpawnSlot.RemoveAt(randPos);
+        }
     }
-   
+    
     public void ExitGame() => Application.Quit();
     public void NewGame() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
