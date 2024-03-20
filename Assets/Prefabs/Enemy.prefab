@@ -533,7 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 5
+  damageAmount: 4
   health: {fileID: 7716795254242273928}
 --- !u!58 &9101112223296353906
 CircleCollider2D:
@@ -1329,7 +1329,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  health: 5
+  health: 2
   bodypartRigidbody:
   - {fileID: 8831521471330137286}
   - {fileID: 7272441871010042149}
@@ -1352,7 +1352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b83fb6113ff994bb28297893b687a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2752010419366038590, guid: 9f998b11852250c4892d4cea66e1b01f, type: 3}
+  projectilePrefab: {fileID: 2752010419366038590, guid: ebe2b3ca91747cd4a907ab143c45e656, type: 3}
   rotatePoint: {fileID: 6123902296365154878}
   spawnPoint: {fileID: 8695303469364562153}
   launchForce: 15
@@ -2114,7 +2114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687b08b48ee31d74ab13c8794caab785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 3
+  damageAmount: 2
   health: {fileID: 7716795254242273928}
 --- !u!60 &2324866996626966840
 PolygonCollider2D:
