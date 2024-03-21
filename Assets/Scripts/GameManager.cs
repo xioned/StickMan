@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public UiManager uiManager;
-    public GameObject enemyPrefab;
+    public GameObject[] enemyPrefabs;
     public int score;
     public int savedScore;
     public int tmpPoint;
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
         }
     
         int randPos = UnityEngine.Random.Range(0, enemySpawnPosition.Length);
-        Instantiate(enemyPrefab, enemySpawnPosition[randPos].position,Quaternion.identity);
+        Instantiate(enemyPrefabs[UnityEngine.Random.Range(0,enemyPrefabs.Length)], enemySpawnPosition[randPos].position,Quaternion.identity);
 
         Debug.Log("Spwaning new enemy");
     }
