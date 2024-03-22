@@ -21,7 +21,6 @@ public class Enemy : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.OnPlayerIsDeadEvent -= PlayerDied;
-
     }
 
     private void PlayerDied()=> isDead = true;

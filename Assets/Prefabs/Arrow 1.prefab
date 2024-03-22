@@ -28,7 +28,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2752010419366038590}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.796, y: 0, z: 0}
   m_LocalScale: {x: -0.15, y: -0.15, z: -0.15}
@@ -36,6 +35,7 @@ Transform:
   m_Children:
   - {fileID: 5686994160279914141}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6120972205825422358
 Rigidbody2D:
@@ -54,12 +54,6 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -124,33 +118,13 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2752010419366038590}
   m_Enabled: 1
-  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
+  m_UsedByComposite: 0
   m_Offset: {x: 1.47, y: 0}
+  serializedVersion: 2
   m_Radius: 0.56736654
 --- !u!114 &1996858815192583894
 MonoBehaviour:
@@ -166,9 +140,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodparticle: {fileID: 3012132706189838537, guid: 3d8e3a650f781b84882135f3f90663f9, type: 3}
   isEnemyArrow: 0
+  isBossArrow: 0
   source: {fileID: 9152719753466808683}
   hit:
   - {fileID: 8300000, guid: 8c4d154b6155eb947b9f0a908e46b582, type: 3}
+  borderLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!82 &9152719753466808683
 AudioSource:
   m_ObjectHideFlags: 0
@@ -289,13 +267,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5020503523789644425}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 6.038, y: -0.116, z: -0}
   m_LocalScale: {x: 0.828, y: 0.4143276, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3129398255070921818}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!212 &7887140057369061205
 SpriteRenderer:
