@@ -25,13 +25,6 @@ public class Arrow : MonoBehaviour
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 1, borderLayerMask);
-        //Debug.DrawRay(transform.position, transform.right, Color.red, 50f);
-        if (hit.collider)
-        {
-            BounceArrow(hit.collider);
-        }
-
         if (!GetComponent<Renderer>().isVisible)
         {
             //Destroy(gameObject);
@@ -40,7 +33,7 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isBossArrow && isEnemyArrow && collision.gameObject.GetComponent<CameraBorderCollider>())
+        if (isBossArrow && isEnemyArrow && collision.gameObject.GetComponentInParent<CameraBorderCollider>())
         {
             BounceArrow(collision);
             return;
@@ -60,8 +53,6 @@ public class Arrow : MonoBehaviour
         }
         if (isEnemyArrow)
         {
-
-
             Debug.Log(bp.gameObject.layer);
 
             if (bp.gameObject.layer == 6)
@@ -124,11 +115,8 @@ public class Arrow : MonoBehaviour
 
     private void BounceArrow(Collider2D collision)
     {
-        ContactPoint2D[] contacts = new ContactPoint2D[1];
-        collision.GetContacts(contacts);
-        Debug.Log(contacts[0].normal);
-
-        Vector2 direction = Vector3.Reflect(rb.velocity.normalized, contacts[0].normal);
+        Vector2 normal = collision.GetComponent<EdgeCollider2D>().bounds.center.normalized;
+        Vector2 direction = Vector3.Reflect(rb.velocity.normalized, normal);
         rb.velocity = direction * Mathf.Max(rb.velocity.magnitude, 15f);
     }
 }

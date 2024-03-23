@@ -5,15 +5,19 @@ using UnityEngine;
 public class CameraBorderCollider : MonoBehaviour
 {
     private Camera cam;
-    private EdgeCollider2D edge;
-    private Vector2[] edgePoints;
+    public EdgeCollider2D[] borders = new EdgeCollider2D[4];
 
     void Awake()
     {
         cam = Camera.main;
-        edge = GetComponent<EdgeCollider2D>() == null ? gameObject.AddComponent<EdgeCollider2D>() : GetComponent<EdgeCollider2D>();
-        edgePoints = new Vector2[5];
         AddCollider();
+    }
+    private void Start()
+    {
+        for (int i = 0; i < borders.Length; i++)
+        {
+            borders[i].enabled = true;
+        }
     }
 
     void AddCollider()
@@ -23,12 +27,9 @@ public class CameraBorderCollider : MonoBehaviour
         Vector2 topLeft = new(bottomLeft.x, topRight.y);
         Vector2 bottomRight = new(topRight.x, bottomLeft.y);
 
-        edgePoints[0] = bottomLeft;
-        edgePoints[1] = topLeft;
-        edgePoints[2] = topRight;
-        edgePoints[3] = bottomRight;
-        edgePoints[4] = bottomLeft;
-
-        edge.points = edgePoints;
+        borders[0].points = new Vector2[2] { bottomLeft, topLeft };
+        borders[1].points = new Vector2[2] { topLeft, topRight }; ;
+        borders[2].points = new Vector2[2] { topRight, bottomRight }; ;
+        borders[3].points = new Vector2[2] { bottomRight, bottomLeft }; ;
     }
 }
