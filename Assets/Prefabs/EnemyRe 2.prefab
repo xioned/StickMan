@@ -3269,7 +3269,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 161352439984124679}
   launchForce: 15
   waitTime: 2
-  rotateClampPoint: {x: -25, y: 25}
+  rotateClampPoint: {x: -20, y: 20}
   heldSpear: {fileID: 161352439878624107}
   spinArm: {fileID: 161352438977096394}
   isDead: 0

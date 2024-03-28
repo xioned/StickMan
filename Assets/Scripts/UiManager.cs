@@ -31,7 +31,7 @@ public class UiManager : MonoBehaviour
         GameEvents.EnemyDamageUiEvent -= DamageUipop;
     }
 
-    public void ShowLevelCOmplete()
+    public void ShowLevelComplete()
     {
         levelCleared.SetActive(true);
         powerupPanel.SetActive(false);

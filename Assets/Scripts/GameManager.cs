@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,52 +15,34 @@ public class GameManager : MonoBehaviour
     public int tmpPoint;
     public Transform[] enemySpawnPosition;
     public int enemyKilledCount;
-    public int difficultyLevel = 1;
+    public int difficultyLevel;
     public bool gameOver;
     public bool levelCelared;
     public PowerupView[] powerupViews;
-
-    Transform[] emptySpawnSlot;
-    private void OnEnable()
-    {
-        GameEvents.EnemyDamageUiEvent += AddScore;
-    }
-
-    private void OnDisable()
-    {
-        GameEvents.EnemyDamageUiEvent -= AddScore;
-    }
+    List<Vector3> emptyEnemySpawnPos;
+    int levelEnemyCount = 0;
+    private void OnEnable() => GameEvents.EnemyDamageUiEvent += AddScore;
+    private void OnDisable()=> GameEvents.EnemyDamageUiEvent -= AddScore;
 
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-    }
+    private void Awake() => Instance = this;
 
     private void Start()
     {
+        difficultyLevel = 1;
         ScoreUpdate();
-        SpawnNewEnemy();
+        SpawnLevelEnemy();
     }
 
     public void NextLevel()
     {
-        uiManager.levelCleared.SetActive(false);
-        uiManager.powerupPanel.SetActive(true);
         levelCelared = false;
-        SpawnNewEnemy();
         enemyKilledCount = 0;
-        score = 0;
-        Global.isSpeedActive = false;
         tmpPoint = savedScore;
-        uiManager.UpdateScoreUi(score, savedScore);
+        Global.isSpeedActive = false;
+
+        SpawnLevelEnemy();
+
         for (int i = 0; i < powerupViews.Length; i++)
         {
             powerupViews[i].ShowHide();
@@ -67,6 +52,11 @@ public class GameManager : MonoBehaviour
                 powerupViews[i].powerUpPrefab[j].SetActive(false);
             }
         }
+
+        //UI
+        uiManager.UpdateScoreUi(score, savedScore);
+        uiManager.levelCleared.SetActive(false);
+        uiManager.powerupPanel.SetActive(true);
     }
 
     private void AddScore(int arg1, Vector3 vector)
@@ -90,27 +80,36 @@ public class GameManager : MonoBehaviour
     
     public void IncreaseKillCount()
     {
+        levelEnemyCount--;
         enemyKilledCount++;
         if (enemyKilledCount >= 3 * difficultyLevel)
         {
-            uiManager.ShowLevelCOmplete(); 
             levelCelared = true;
-            difficultyLevel = 2;
+            difficultyLevel ++;
+
+            uiManager.ShowLevelComplete(); 
         }
     }
 
-
-    public void SpawnNewEnemy()
+    public void SpawnLevelEnemy()
     {
-        if(gameOver || levelCelared) 
-        { 
-            return; 
+        if (gameOver || levelCelared) return;
+        
+        if (levelEnemyCount > 0) return;
+        emptyEnemySpawnPos = new();
+        levelEnemyCount = 0;
+        for (int i = 0; i < enemySpawnPosition.Length; i++)
+        {
+            emptyEnemySpawnPos.Add(enemySpawnPosition[i].position);
         }
-    
-        int randPos = UnityEngine.Random.Range(0, enemySpawnPosition.Length);
-        Instantiate(enemyPrefabs[UnityEngine.Random.Range(0,enemyPrefabs.Length)], enemySpawnPosition[randPos].position,Quaternion.identity);
 
-        Debug.Log("Spwaning new enemy");
+        for (int i = 0; i < difficultyLevel; i++)
+        {
+            levelEnemyCount++;
+            int randPos = UnityEngine.Random.Range(0, emptyEnemySpawnPos.Count);
+            Instantiate(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)], emptyEnemySpawnPos[randPos], Quaternion.identity);
+            emptyEnemySpawnPos.RemoveAt(randPos);
+        }
     }
    
     public void ExitGame() => Application.Quit();

@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         GameManager.Instance.IncreaseKillCount();
-        GameManager.Instance.SpawnNewEnemy();
+        GameManager.Instance.SpawnLevelEnemy();
         Destroy(this.gameObject);
     }
 

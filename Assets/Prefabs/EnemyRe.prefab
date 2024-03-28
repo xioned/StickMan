@@ -3224,19 +3224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b60bec92305ac14f979e8bf8befcf9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
-  bodypartRigidbody:
-  - {fileID: 161352438225353565}
-  - {fileID: 161352439425818019}
-  - {fileID: 161352440122465419}
-  - {fileID: 161352438574107997}
-  - {fileID: 161352439049879612}
-  - {fileID: 161352440111751122}
-  - {fileID: 161352439764503071}
-  - {fileID: 161352439087156942}
-  - {fileID: 161352439567421642}
-  - {fileID: 161352439603602045}
-  - {fileID: 161352439878624108}
   onHealthZero:
     m_PersistentCalls:
       m_Calls:
@@ -3252,6 +3239,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  health: 5
+  bodypartRigidbody:
+  - {fileID: 161352438225353565}
+  - {fileID: 161352439425818019}
+  - {fileID: 161352440122465419}
+  - {fileID: 161352438574107997}
+  - {fileID: 161352439049879612}
+  - {fileID: 161352440111751122}
+  - {fileID: 161352439764503071}
+  - {fileID: 161352439087156942}
+  - {fileID: 161352439567421642}
+  - {fileID: 161352439603602045}
+  - {fileID: 161352439878624108}
 --- !u!114 &2434301194785399472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3269,7 +3269,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 161352439984124679}
   launchForce: 15
   waitTime: 2
-  rotateClampPoint: {x: -25, y: 25}
+  rotateClampPoint: {x: -20, y: 20}
   heldSpear: {fileID: 161352439878624107}
   spinArm: {fileID: 161352438977096394}
   isDead: 0
